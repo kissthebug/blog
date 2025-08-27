@@ -7,20 +7,16 @@ interface Project {
 
 const projectsData: Project[] = [
   {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
-    imgSrc: '/static/images/google.png',
-    href: 'https://www.google.com',
+    title: 'Texas Premier Realty',
+    description: `Frisco, Plano & DFW Real Estate Experts - Buy, Sell, and Invest with Confidence.`,
+    imgSrc: '/static/images/tpr.png',
+    href: '',
   },
   {
-    title: 'The Time Machine',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
-    imgSrc: '/static/images/time-machine.jpg',
-    href: '/blog/the-time-machine',
+    title: 'Carbon reduction platform',
+    description: `The digital platform that enables people and companies to turn everyday positive actions into valuable and scalable global change.`,
+    imgSrc: '/static/images/crp.jpg',
+    href: '',
   },
 ]
 

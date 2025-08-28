@@ -1,0 +1,137 @@
+---
+
+title: 'TypeScript in Practice: A Modern Guide'
+date: '2016-08-28'
+tags: ['typescript', 'javascript', 'types', 'tooling']
+draft: false
+summary: Practical TypeScript—types, generics, narrowing, config, and JS interop with concise examples.
+---
+
+A practical post on getting real value from TypeScript without the yak‑shave.
+
+## Inline Highlighting
+
+Inline example: `const total = (a: number, b: number): number => a + b`.
+
+## Code Blocks
+
+Some TypeScript code
+
+```typescript
+interface User {
+  id: number
+  name: string
+  isAdmin?: boolean
+}
+
+function greet(user: User) {
+  return `Hello, ${user.name}${user.isAdmin ? ' (admin)' : ''}`
+}
+
+const alice: User = { id: 1, name: 'Alice' }
+console.log(greet(alice))
+```
+
+Type narrowing
+
+```typescript
+function printId(id: string | number) {
+  if (typeof id === 'string') {
+    console.log(id.toUpperCase())
+  } else {
+    console.log(id.toFixed(2))
+  }
+}
+```
+
+Generics
+
+```typescript
+function wrap<T>(value: T) {
+  return { value }
+}
+
+const wrapped = wrap([1, 2, 3])
+```
+
+Utility types
+
+```typescript
+type Post = { id: string; title: string; body: string; published: boolean }
+
+type PostPreview = Pick<Post, 'id' | 'title'>
+
+type DraftPost = Omit<Post, 'id' | 'published'> & { id?: string; published?: false }
+```
+
+`tsconfig.json` basics
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "strict": true,
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": []
+  },
+  "include": ["src"]
+}
+```
+
+JavaScript interop (JSDoc types in `.js`)
+
+```javascript
+// add types without converting files
+/**
+ * @param {number} a
+ * @param {number} b
+ * @returns {number}
+ */
+export function add(a, b) {
+  return a + b
+}
+```
+
+Ambient declarations
+
+```typescript
+// augment globals safely
+declare global {
+  interface Window {
+    appVersion: string
+  }
+}
+export {}
+```
+
+`never` for exhaustive checks
+
+```typescript
+type Shape = { kind: 'circle'; r: number } | { kind: 'square'; s: number }
+
+function area(shape: Shape): number {
+  switch (shape.kind) {
+    case 'circle':
+      return Math.PI * shape.r ** 2
+    case 'square':
+      return shape.s * shape.s
+    default: {
+      const _exhaustive: never = shape // compiler error if a new variant is missing
+      return _exhaustive
+    }
+  }
+}
+```
+
+Quick start
+
+```bash
+npm i -D typescript @types/node
+npx tsc --init
+```
+
+That’s it—stronger guarantees with lightweight patterns you can drop into any JS codebase.

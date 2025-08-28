@@ -1,19 +1,10 @@
-# Tailwind Nextjs Starter Blog
-
-[![GitHub Repo stars](https://img.shields.io/github/stars/kissthebug/blog?style=social)](https://GitHub.com/kissthebug/blog/stargazers/)
-[![GitHub forks](https://img.shields.io/github/forks/kissthebug/blog?style=social)](https://github.com/kissthebug/blog/forks)
-[![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fkissthebugx)](https://x.com/kissthebugx)
-[![Sponsor](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&link=https://github.com/sponsors/kissthebug)](https://github.com/sponsors/kissthebug)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/kissthebug/blog)
+# My Blog
 
 This is a [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/) blog. It is based on Next App directory with [React Server Component](https://nextjs.org/docs/getting-started/react-essentials#server-components) and uses [Contentlayer](https://www.contentlayer.dev/) to manage markdown content.
 
 Probably the most feature-rich Next.js markdown blogging template out there. Easily configurable and customizable. Perfect as a replacement to existing Jekyll and Hugo individual blogs.
 
 Check out the documentation below to get started.
-
-Facing issues? Check the [FAQ page](https://github.com/kissthebug/blog/wiki) and do a search on past issues. Feel free to open a new issue if none has been posted previously.
 
 Feature request? Check the past discussions to see if it has been brought up previously. Otherwise, feel free to start a new discussion thread. All ideas are welcomed!
 
@@ -56,15 +47,6 @@ Internationalization support - [Template with i18n](https://blog-i18n.vercel.app
 - Projects page
 - Preconfigured security headers
 - SEO friendly with RSS feed, sitemaps and more!
-
-## Sample posts
-
-- [A markdown guide](https://blog.vercel.app/blog/github-markdown-guide)
-- [Learn more about images in Next.js](https://blog.vercel.app/blog/guide-to-using-images-in-nextjs)
-- [A tour of math typesetting](https://blog.vercel.app/blog/deriving-ols-estimator)
-- [Simple MDX image grid](https://blog.vercel.app/blog/pictures-of-canada)
-- [Example of long prose](https://blog.vercel.app/blog/the-time-machine)
-- [Example of Nested Route Post](https://blog.vercel.app/blog/nested-route/introducing-multi-part-posts-with-nested-routing)
 
 ## Quick Start Guide
 
@@ -179,7 +161,3 @@ layout: PostLayout
 canonicalUrl: https://blog.vercel.app/blog/introducing-blog
 ---
 ```
-
-## Support
-
-Using the template? Support this effort by giving a star on GitHub, sharing your own blog and giving a shoutout on Twitter or becoming a project [sponsor](https://github.com/sponsors/kissthebug).

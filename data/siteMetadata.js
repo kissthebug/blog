@@ -9,7 +9,7 @@ const siteMetadata = {
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
   siteRepo: 'https://github.com/kissthebug/blog',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
-  socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
+  socialBanner: `${process.env.BASE_PATH || ''}/static/images/tpr.png`,
   mastodon: 'https://mastodon.social/@mastodonuser',
   email: '',
   github: 'https://github.com/kissthebug',

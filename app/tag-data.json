@@ -1,20 +1,12 @@
 {
-  "typescript": 1,
-  "javascript": 1,
-  "types": 1,
-  "tooling": 1,
+  "tram": 1,
+  "portfolio": 1,
   "machine-learning": 1,
   "ai": 1,
   "data-science": 1,
+  "typescript": 1,
+  "javascript": 1,
+  "tooling": 1,
   "markdown": 1,
-  "code": 1,
-  "features": 1,
-  "github": 1,
-  "guide": 2,
-  "next-js": 2,
-  "holiday": 1,
-  "canada": 1,
-  "images": 1,
-  "multi-author": 1,
-  "feature": 1
+  "code": 1
 }

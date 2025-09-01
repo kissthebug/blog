@@ -1,0 +1,276 @@
+---
+title: 'How to Create an npm Library for a React Button Component'
+date: '2018-12-2'
+tags: ['react', 'npm', 'typescript', 'library', 'guide']
+draft: false
+summary: Step-by-step guide to building and publishing a React button component as an npm package with TypeScript and tsup.
+---
+
+# Create an npm Library for a React Button Component
+
+A concise, modern setup using **TypeScript** + **tsup** (esbuild) to ship **ESM + CJS**, correct `exports`, React **18/19** support, and type declarations.
+
+---
+
+## 1) Prerequisites & Scaffold
+
+```bash
+# Node 18+ and an npm account (npm login)
+mkdir @your-scope/react-simple-button && cd $_
+npm init -y
+
+# Basic metadata
+npm pkg set name="@your-scope/react-simple-button" version="0.1.0" license="MIT" description="A tiny typed React button component."
+
+# Tooling (React stays a peer for consumers; installed here as dev for local build/testing)
+npm i -D typescript tsup @types/react @types/react-dom
+npm i -D react react-dom
+```
+
+---
+
+## 2) Project Layout
+
+```
+.
+├─ src/
+│  ├─ Button.tsx
+│  └─ index.ts
+├─ tsconfig.json
+├─ tsup.config.ts
+├─ package.json
+└─ README.md
+```
+
+---
+
+## 3) Source Code
+
+### `src/Button.tsx`
+
+```tsx
+import type { ButtonHTMLAttributes, ReactNode } from 'react'
+
+export type ButtonProps = {
+  children: ReactNode
+  variant?: 'primary' | 'secondary'
+} & ButtonHTMLAttributes<HTMLButtonElement>
+
+export function Button({ children, variant = 'primary', className = '', ...rest }: ButtonProps) {
+  const base = 'inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium'
+  const styles =
+    variant === 'primary'
+      ? 'bg-blue-600 text-white hover:bg-blue-700'
+      : 'bg-zinc-200 text-zinc-900 hover:bg-zinc-300'
+
+  return (
+    <button className={`${base} ${styles} ${className}`} {...rest}>
+      {children}
+    </button>
+  )
+}
+
+export default Button
+```
+
+### `src/index.ts`
+
+```ts
+export * from './Button'
+export { Button as default } from './Button'
+```
+
+---
+
+## 4) TypeScript Config
+
+Create `tsconfig.json` (you can start with `npx tsc --init` and replace):
+
+```json
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "target": "ES2020",
+    "declaration": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"]
+}
+```
+
+---
+
+## 5) Build with tsup (esbuild)
+
+Add scripts and config:
+
+```bash
+npm pkg set scripts.build="tsup"
+npm pkg set scripts.dev="tsup --watch"
+```
+
+### `tsup.config.ts`
+
+```ts
+import { defineConfig } from 'tsup'
+
+export default defineConfig({
+  entry: ['src/index.ts'],
+  format: ['esm', 'cjs'], // dual output
+  dts: true, // type declarations
+  sourcemap: true,
+  clean: true,
+  minify: false,
+  external: ['react', 'react-dom'], // keep peers external
+  splitting: false,
+  treeshake: true,
+})
+```
+
+---
+
+## 6) `package.json` (modern exports + peers)
+
+Merge/ensure these fields exist:
+
+```json
+{
+  "name": "@your-scope/react-simple-button",
+  "version": "0.1.0",
+  "description": "A tiny typed React button component.",
+  "keywords": ["react", "button", "ui", "component", "library"],
+  "author": "You <you@example.com>",
+  "license": "MIT",
+  "sideEffects": false,
+  "files": ["dist"],
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@types/react": "^18.2.74",
+    "@types/react-dom": "^18.2.24",
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  }
+}
+```
+
+---
+
+## 7) Build
+
+```bash
+npm run build
+```
+
+You should see a `dist/` like:
+
+```
+dist/
+  index.cjs
+  index.cjs.map
+  index.d.ts
+  index.mjs
+  index.mjs.map
+```
+
+---
+
+## 8) Quick Local Test (without publishing)
+
+Pack the library and install it into a sample app:
+
+```bash
+npm pack
+# -> your-scope-react-simple-button-0.1.0.tgz
+```
+
+In a test app (e.g., Vite React):
+
+```bash
+npm i ../path/to/your-scope-react-simple-button-0.1.0.tgz
+```
+
+Use it:
+
+```tsx
+import Button from '@your-scope/react-simple-button'
+
+export default function App() {
+  return <Button onClick={() => alert('hi!')}>Hello</Button>
+}
+```
+
+---
+
+## 9) Publish to npm
+
+```bash
+npm login
+npm publish --access public
+```
+
+Notes:
+
+- Scoped packages default to **private**; `--access public` makes them public.
+- Consider adding `repository`, `bugs`, and `homepage` fields to your `package.json` for nice links on npm:
+
+```json
+{
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/react-simple-button.git"
+  },
+  "bugs": { "url": "https://github.com/your-username/react-simple-button/issues" },
+  "homepage": "https://github.com/your-username/react-simple-button#readme"
+}
+```
+
+---
+
+## 10) Optional Nice-to-haves
+
+- **Validate package layout**: `npx publint`
+- **Storybook** for visual testing & docs
+- **CSS shipping**: if you emit CSS, set `"sideEffects": ["*.css"]` so bundlers don’t tree-shake required styles
+- **CI**: add a GitHub Action to run `npm run build` (and optionally `publint`) on PRs
+- **README**: include usage, props, and badges (npm version, CI status, license)
+
+---
+
+### ✅ Copy-Paste Checklist
+
+1. Create folder & `npm init -y`
+2. Add `src/Button.tsx` and `src/index.ts`
+3. Add `tsconfig.json`
+4. Add `tsup.config.ts`
+5. Update `package.json` (exports, peers, scripts)
+6. `npm i -D typescript tsup @types/react @types/react-dom react react-dom`
+7. `npm run build`
+8. `npm pack` (local test) or `npm publish --access public`

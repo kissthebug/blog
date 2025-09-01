@@ -135,12 +135,12 @@ Here's an example of a post's frontmatter:
 ---
 title: 'Introducing Tailwind Nexjs Blog'
 date: '2021-01-12'
-lastmod: '2021-01-18'
-tags: ['next-js', 'tailwind', 'guide']
+lastmod: '2025-08-30'
+tags: ['next-js', 'tailwind']
 draft: false
 summary: 'Looking for a performant, out of the box template, with all the best in web technology to support your blogging needs? Checkout the Tailwind Nextjs Blog.'
 images: ['/static/images/canada/mountains.jpg', '/static/images/canada/toronto.jpg']
-authors: ['default', 'sparrowhawk']
+authors: ['default']
 layout: PostLayout
 canonicalUrl: https://blog.vercel.app/blog/introducing-blog
 ---

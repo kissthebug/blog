@@ -3,7 +3,7 @@ const siteMetadata = {
   title: 'Blog',
   author: 'KissTheBug',
   headerTitle: 'KissTheBug',
-  description: 'A blog created with Next.js and Tailwind.css',
+  description: 'Chill-time blogs I wrote in my spare moments',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://github.com/kissthebug/blog',

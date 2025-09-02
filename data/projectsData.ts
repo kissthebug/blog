@@ -15,8 +15,8 @@ const projectsData: Project[] = [
   {
     title: 'Carbon reduction platform',
     description: `The digital platform that enables people and companies to turn everyday positive actions into valuable and scalable global change.`,
-    imgSrc: '/static/images/crp.jpg',
-    href: '',
+    imgSrc: '/static/images/crp.png',
+    href: 'https://kissthebug.github.io/blog/blog/tram',
   },
 ]
 

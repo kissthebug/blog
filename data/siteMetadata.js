@@ -6,11 +6,11 @@ const siteMetadata = {
   description: 'Chill-time blogs I wrote in my spare moments',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://github.com/kissthebug/blog',
+  siteUrl: 'https://kissthebug.github.io/blog',
   siteRepo: 'https://github.com/kissthebug/blog',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/tpr.png`,
-  mastodon: 'https://mastodon.social/@mastodonuser',
+  mastodon: '',
   email: '',
   github: 'https://github.com/kissthebug',
   x: '',

@@ -3,6 +3,8 @@ title: 'Building a Simple Web3 App on Solana'
 date: '2024-7-13'
 tags: ['solana', 'web3', 'blockchain', 'development']
 draft: false
+layout: PostBanner
+images: ['/static/images/bc/solana.jpg']
 summary: A quick walkthrough of how to build a simple Solana web3 application and interact with the blockchain.
 ---
 
@@ -12,7 +14,7 @@ Web3 development can feel overwhelming at first, but it doesn’t have to be. So
 
 First, install the Solana CLI and configure a devnet wallet:
 
-```
+```bash
     sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
     solana config set --url https://api.devnet.solana.com
     solana-keygen new
@@ -24,16 +26,16 @@ This gives you a local keypair and a wallet ready for testing.
 
 You can use the `@solana/web3.js` library to interact with the Solana network. Create a simple script that checks your wallet balance:
 
-```
-    import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
+```typescript
+import { Connection, PublicKey, clusterApiUrl } from '@solana/web3.js'
 
-    const connection = new Connection(clusterApiUrl("devnet"));
-    const wallet = new PublicKey("YOUR_PUBLIC_KEY");
+const connection = new Connection(clusterApiUrl('devnet'))
+const wallet = new PublicKey('YOUR_PUBLIC_KEY')
 
-    (async () => {
-      const balance = await connection.getBalance(wallet);
-      console.log("Balance:", balance / 1e9, "SOL");
-    })();
+;(async () => {
+  const balance = await connection.getBalance(wallet)
+  console.log('Balance:', balance / 1e9, 'SOL')
+})()
 ```
 
 ### Step 3: Sending a transaction

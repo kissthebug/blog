@@ -10,7 +10,7 @@ const projectsData: Project[] = [
     title: 'Texas Premier Realty',
     description: `Frisco, Plano & DFW Real Estate Experts - Buy, Sell, and Invest with Confidence.`,
     imgSrc: '/static/images/tpr.png',
-    href: '',
+    href: 'https://www.texaspremierrealty.com/',
   },
   {
     title: 'Carbon reduction platform',

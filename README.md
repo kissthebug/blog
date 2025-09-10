@@ -69,7 +69,7 @@ First, run the development server:
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:4200](http://localhost:4200) with your browser to see the result.
 
 Edit the layout in `app` or content in `data`. With live reloading, the pages auto-updates as you edit them.
 

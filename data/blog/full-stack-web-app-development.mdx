@@ -1,0 +1,196 @@
+---
+title: 'Building a Full-Stack AI Navigation System with TypeScript and Modern Tools'
+date: '2025-9-10'
+tags: ['fullstack', 'typescript', 'nextjs', 'fastify', 'prisma', 'ai', 'postgresql']
+draft: false
+layout: PostBanner
+images: ['/static/images/fs_web_dev.png']
+summary: A deep dive into building a modern full-stack web application with TypeScript, Next.js, Zustand, React Query, Fastify, PostgreSQL, and Prisma — powered by AI-assisted coding.
+---
+
+Modern full-stack development has evolved rapidly. With new frameworks, runtimes, and AI-powered developer tools, we can build scalable applications faster than ever. In this post, we’ll walk through designing a **full-stack AI navigation system** using **TypeScript** and a carefully chosen stack of modern technologies.
+
+---
+
+## Why This Tech Stack?
+
+- **TypeScript** – Strong typing and tooling, reducing runtime errors.
+- **Next.js** – Hybrid framework for SSR, API routes, and static rendering.
+- **Zustand** – Lightweight and simple state management for React.
+- **React Query** – Declarative server state management, caching, and background updates.
+- **Fastify** – A blazing fast Node.js backend framework with a plugin ecosystem.
+- **PostgreSQL + Prisma** – Reliable relational database with a modern type-safe ORM.
+- **AI-Assisted Coding** – Tools like GitHub Copilot or ChatGPT drastically speed up prototyping and debugging.
+
+> ⚡ _Opinion:_ I believe this stack strikes the right balance between **developer experience, scalability, and maintainability**. It avoids heavy boilerplate (like Redux or Express middlewares) while still being production-ready. Prisma in particular eliminates a lot of friction when working with databases.
+
+---
+
+## Example App: AI Navigation System
+
+Imagine an app that helps users find **the best route** between two places using AI. Users can:
+
+- Enter start and destination points.
+- Get AI-assisted suggestions (e.g., fastest, safest, or scenic route).
+- Save favorite routes for later.
+
+---
+
+## Project Structure
+
+```
+/ai-navigation
+ ├── backend/          # Fastify server
+ ├── frontend/         # Next.js frontend
+ ├── prisma/           # Database schema and migrations
+ └── shared/           # Shared TypeScript types
+```
+
+---
+
+## Backend: Fastify + Prisma
+
+```ts
+import Fastify from 'fastify'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+const fastify = Fastify()
+
+fastify.get('/routes', async (request, reply) => {
+  const routes = await prisma.route.findMany()
+  return routes
+})
+
+fastify.post('/routes', async (request: any, reply) => {
+  const { start, destination, preference } = request.body
+  const suggestion = `${start} -> ${destination} via ${preference} path`
+
+  const route = await prisma.route.create({
+    data: { start, destination, suggestion },
+  })
+
+  return route
+})
+
+fastify.listen({ port: 4000 }, () => console.log('🚀 Fastify API running on http://localhost:4000'))
+```
+
+---
+
+## Database Schema
+
+```prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Route {
+  id          Int      @id @default(autoincrement())
+  start       String
+  destination String
+  suggestion  String
+  createdAt   DateTime @default(now())
+}
+```
+
+Run migrations:
+
+```
+npx prisma migrate dev
+```
+
+---
+
+## Frontend: Next.js + Zustand + React Query
+
+**State with Zustand**
+
+```ts
+import create from 'zustand'
+
+export const useRouteStore = create((set) => ({
+  routes: [],
+  setRoutes: (routes) => set({ routes }),
+}))
+```
+
+**Fetching with React Query**
+
+```ts
+import { useQuery, useMutation } from '@tanstack/react-query'
+
+export function useRoutes() {
+  return useQuery(['routes'], async () => {
+    const res = await fetch('http://localhost:4000/routes')
+    return res.json()
+  })
+}
+
+export function useAddRoute() {
+  return useMutation(async (newRoute) => {
+    const res = await fetch('http://localhost:4000/routes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newRoute),
+    })
+    return res.json()
+  })
+}
+```
+
+**UI Example (Next.js Page)**
+
+```tsx
+import { useState } from 'react'
+import { useRoutes, useAddRoute } from '../hooks/routes'
+
+export default function Home() {
+  const { data: routes } = useRoutes()
+  const addRoute = useAddRoute()
+  const [start, setStart] = useState('')
+  const [destination, setDestination] = useState('')
+
+  const handleSubmit = async () => {
+    await addRoute.mutateAsync({ start, destination, preference: 'fastest' })
+  }
+
+  return (
+    <div>
+      <h1>🗺️ AI Navigation</h1>
+      <input value={start} onChange={(e) => setStart(e.target.value)} placeholder="Start" />
+      <input
+        value={destination}
+        onChange={(e) => setDestination(e.target.value)}
+        placeholder="Destination"
+      />
+      <button onClick={handleSubmit}>Get Route</button>
+      <ul>{routes?.map((r: any) => <li key={r.id}>{r.suggestion}</li>)}</ul>
+    </div>
+  )
+}
+```
+
+---
+
+## My Thoughts
+
+This stack is **lean yet powerful**.
+
+- Next.js gives flexibility with SSR and static pages.
+- Zustand and React Query handle both local and server state elegantly without overengineering.
+- Prisma makes database access enjoyable.
+- Fastify keeps the backend blazing fast and modular.
+- AI coding assistants reduce boilerplate and help explore new APIs faster.
+
+I expect this type of stack to **dominate modern startups** — small teams can move quickly, scale when needed, and deliver AI-driven apps to production.
+
+---
+
+**Conclusion**:  
+Building an AI navigation system (or any modern app) doesn’t need an enterprise-level stack. With **TypeScript + Next.js + Fastify + Prisma + AI tools**, you can build powerful, production-ready apps in record time.

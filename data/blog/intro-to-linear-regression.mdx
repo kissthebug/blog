@@ -1,0 +1,81 @@
+---
+title: 'Introduction to Linear Regression'
+date: '2025-3-8'
+tags: ['machine learning', 'linear regression', 'statistics', 'python']
+draft: false
+layout: PostBanner
+images: ['/static/images/ml/linear_regression_plot.png']
+summary: A beginner-friendly guide to Linear Regression, its history, concepts, and a simple implementation in Python.
+---
+
+Linear Regression is one of the oldest and most fundamental algorithms in machine learning and statistics. It models the relationship between input features and a continuous output variable by fitting a straight line (or hyperplane in higher dimensions).
+
+### A Brief History
+
+- **1805:** Adrien-Marie Legendre introduced the method of least squares.
+- **1809:** Carl Friedrich Gauss further developed and popularized least squares estimation.
+- **1900s onward:** Linear regression became a core method in statistics, econometrics, and later machine learning.
+
+### Why Linear Regression?
+
+- **Simplicity:** Easy to understand and implement.
+- **Interpretability:** Coefficients directly represent feature importance.
+- **Foundation:** Forms the basis for many advanced algorithms.
+
+### The Mathematical Idea
+
+The model assumes:
+
+```math
+    y = β0 + β1x1 + β2x2 + ... + βnxn + ε
+```
+
+Where:
+
+- `y` is the target variable
+- `β0` is the intercept
+- `βi` are the coefficients
+- `ε` is the error term
+
+### Python Example: Predicting House Prices
+
+Here’s a simple implementation using scikit-learn:
+
+```python
+    import numpy as np
+    from sklearn.linear_model import LinearRegression
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import mean_squared_error
+
+    # Example dataset: house size vs. price
+    X = np.array([[800], [1000], [1200], [1500], [1800], [2000]])
+    y = np.array([150, 200, 240, 310, 360, 400])  # in $1000s
+
+    # Split into train and test sets
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+
+    # Train model
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+
+    # Predict
+    y_pred = model.predict(X_test)
+
+    # Evaluate
+    mse = mean_squared_error(y_test, y_pred)
+    print("Mean Squared Error:", mse)
+    print("Coefficient:", model.coef_[0])
+    print("Intercept:", model.intercept_)
+```
+
+### Key Takeaways
+
+- Linear regression is one of the most intuitive models.
+- It works well when the relationship between variables is approximately linear.
+- It provides insights into how features impact predictions.
+
+---
+
+Linear regression remains an essential tool for both beginners and experts. It’s often the first algorithm you learn in machine learning, and it builds intuition for more complex models like logistic regression and generalized linear models.

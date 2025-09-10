@@ -1,0 +1,106 @@
+---
+title: 'Full Stack dApp Development on Ethereum Mainnet'
+date: '2022-9-3'
+tags: ['ethereum', 'web3', 'dapp', 'blockchain', 'full stack']
+draft: false
+layout: PostBanner
+images: ['/static/images/bc/fullstack_dapp_architecture.png']
+summary: A beginner-friendly introduction to building and deploying a full stack decentralized application (dApp) on the Ethereum mainnet.
+---
+
+Decentralized applications (dApps) are the backbone of Web3. Unlike traditional apps, dApps run on blockchain networks like Ethereum, combining smart contracts with web interfaces. In this post, we’ll explore the essentials of building a **full stack dApp** on Ethereum mainnet.
+
+### What Is a Full Stack dApp?
+
+A dApp typically has three layers:
+
+1. **Smart Contract Layer** – Core logic deployed to the Ethereum blockchain.
+2. **Backend/Server Layer** – Optional APIs or indexing services to optimize data retrieval.
+3. **Frontend Layer** – A web UI that interacts with the blockchain via a wallet (e.g., MetaMask).
+
+### Step 1: Writing a Smart Contract
+
+Let’s start with a simple Solidity contract that stores and retrieves a message.
+
+```solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.0;
+
+    contract MessageBoard {
+        string public message;
+
+        function setMessage(string calldata _message) external {
+            message = _message;
+        }
+    }
+```
+
+Deploy this contract to Ethereum (testnet first) using **Hardhat** or **Foundry**.
+
+### Step 2: Interacting with the Contract
+
+Use **ethers.js** in your frontend to connect to the contract:
+
+```ts
+import { ethers } from 'ethers'
+import contractABI from './MessageBoard.json'
+
+const contractAddress = 'YOUR_DEPLOYED_CONTRACT_ADDRESS'
+
+async function setMessage(newMessage) {
+  if (window.ethereum) {
+    const provider = new ethers.BrowserProvider(window.ethereum)
+    const signer = await provider.getSigner()
+    const contract = new ethers.Contract(contractAddress, contractABI.abi, signer)
+    const tx = await contract.setMessage(newMessage)
+    await tx.wait()
+    console.log('Message updated:', newMessage)
+  }
+}
+```
+
+### Step 3: Building the Frontend
+
+A simple React frontend can call these functions. With libraries like **wagmi** or **rainbowkit**, you can add wallet connection UIs easily.
+
+```ts
+    import React, { useState } from "react";
+
+    export default function App() {
+      const [message, setMessageInput] = useState("");
+
+      const handleSubmit = async () => {
+        await setMessage(message);
+      };
+
+      return (
+        <div>
+          <h1>Ethereum Message Board</h1>
+          <input
+            value={message}
+            onChange={(e) => setMessageInput(e.target.value)}
+            placeholder="Write a message"
+          />
+          <button onClick={handleSubmit}>Submit</button>
+        </div>
+      );
+    }
+```
+
+### Step 4: Deployment on Mainnet
+
+- **Smart Contracts:** Deploy using Hardhat with an Ethereum provider (e.g., Infura or Alchemy).
+- **Frontend:** Deploy with Vercel, Netlify, or your favorite hosting provider.
+- **Verify:** Always test thoroughly on Goerli/holesky before deploying to mainnet.
+
+---
+
+### Key Takeaways
+
+- A full stack dApp combines smart contracts, optional backend services, and a user-friendly frontend.
+- Ethereum mainnet provides global accessibility but requires careful attention to gas costs and security.
+- Start small, build on testnets, and then scale up to production-ready deployments.
+
+---
+
+Full stack Ethereum development is both challenging and rewarding. With the right tools, you can build applications that are **trustless, transparent, and open to anyone worldwide**.

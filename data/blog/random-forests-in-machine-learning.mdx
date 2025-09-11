@@ -1,0 +1,94 @@
+---
+title: Random Forests in Machine Learning
+date: '2025-4-2'
+tags: ['machine-learning', 'random-forest', 'ensemble']
+draft: false
+layout: PostBanner
+images: ['/static/images/ml/random_forests.png']
+summary: Random Forests are powerful ensemble methods that combine multiple decision trees to improve accuracy and reduce overfitting. Let’s explore their history, intuition, and implementation.
+---
+
+Random Forests are one of the most widely used machine learning algorithms today. They are an **ensemble method** that builds multiple decision trees and combines their predictions for stronger results.
+
+---
+
+## 📜 A Brief History
+
+- **1995** – Tin Kam Ho introduced the idea of **random subspace methods**, the precursor to random forests.
+- **2001** – Leo Breiman formalized **Random Forests**, combining bagging (bootstrap aggregation) with random feature selection.
+- Quickly became popular due to their **robustness and accuracy**.
+
+---
+
+## 🌳 How Do Random Forests Work?
+
+Random Forests improve over a single decision tree by reducing variance through **ensembling**.
+
+1. **Bootstrap Sampling (Bagging)**  
+   Each tree is trained on a random subset of the data (with replacement).
+
+2. **Random Feature Selection**  
+   At each split, only a random subset of features is considered.
+
+3. **Aggregation**
+   - For classification → majority voting across trees.
+   - For regression → average prediction across trees.
+
+This combination makes Random Forests **robust to noise, overfitting, and outliers**.
+
+---
+
+## 🧑‍💻 Python Example: Random Forest Classifier
+
+```python
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+
+# Load dataset (Iris flower classification)
+data = load_iris()
+X, y = data.data, data.target
+
+# Split into train/test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train Random Forest model
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+
+# Evaluation
+acc = accuracy_score(y_test, y_pred)
+print("✅ Accuracy:", acc)
+print("📊 Classification Report:\n", classification_report(y_test, y_pred))
+```
+
+---
+
+## ✅ Advantages of Random Forests
+
+- Handles both **classification and regression**
+- Works well with **high-dimensional data**
+- Resistant to **overfitting** compared to single decision trees
+- Provides **feature importance** scores
+- Scales well with large datasets
+
+---
+
+## ⚠️ Limitations
+
+- ❌ Less interpretable compared to single decision trees
+- ❌ Can be slower to train on very large datasets
+- ❌ Predictions are harder to explain (black-box model)
+
+---
+
+## 🎯 Conclusion
+
+Random Forests strike a great balance between **accuracy, robustness, and usability**. They are often one of the **first algorithms** tried in machine learning projects due to their versatility.
+
+While newer methods like **XGBoost and LightGBM** may outperform them in some cases, Random Forests remain a **workhorse algorithm** in applied machine learning.

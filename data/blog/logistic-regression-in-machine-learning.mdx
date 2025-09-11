@@ -1,0 +1,94 @@
+---
+title: 'Logistic Regression in Machine Learning'
+date: '2025-09-11'
+tags: ['machine-learning', 'logistic-regression', 'classification']
+draft: false
+layout: PostBanner
+images: ['/static/images/ml/logistic_vs_linear.png']
+summary: Logistic Regression is one of the simplest yet most powerful algorithms for binary classification. Let’s explore its history, math, and implementation.
+---
+
+Logistic Regression is a foundational algorithm in **machine learning**, especially for **binary classification** tasks such as spam detection, medical diagnosis, and credit scoring.
+
+---
+
+## 📜 A Brief History
+
+- **1958** – David Cox introduced logistic regression as a statistical method.
+- Initially used in **biology and social sciences** to model probabilities.
+- Later adopted in **machine learning** due to its simplicity and effectiveness.
+
+Today, logistic regression is a go-to baseline model for classification problems.
+
+---
+
+## 🔢 The Core Idea
+
+Unlike linear regression, which predicts continuous values, **logistic regression predicts probabilities** between 0 and 1.
+
+It uses the **sigmoid function**:
+
+\[
+\sigma(z) = \frac{1}{1 + e^{-z}}
+\]
+
+Where \(z = w \cdot x + b\).
+
+- If output > 0.5 → Class 1
+- If output ≤ 0.5 → Class 0
+
+---
+
+## 🧑‍💻 Python Example: Logistic Regression with Scikit-Learn
+
+```python
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import load_breast_cancer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix
+
+# Load dataset (binary classification: breast cancer detection)
+data = load_breast_cancer()
+X, y = data.data, data.target
+
+# Split into train/test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train logistic regression model
+model = LogisticRegression(max_iter=5000)
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+
+# Evaluation
+acc = accuracy_score(y_test, y_pred)
+cm = confusion_matrix(y_test, y_pred)
+
+print("✅ Accuracy:", acc)
+print("📊 Confusion Matrix:\n", cm)
+```
+
+---
+
+## 📈 Why Use Logistic Regression?
+
+- ✅ Simple and interpretable
+- ✅ Works well for linearly separable data
+- ✅ Outputs probabilities (not just classes)
+- ✅ Often a strong **baseline model** before trying complex algorithms
+
+---
+
+## ⚠️ Limitations
+
+- ❌ Struggles with **nonlinear relationships**
+- ❌ Can underperform compared to modern methods like **XGBoost** or **Neural Networks**
+- ❌ Requires careful **feature scaling**
+
+---
+
+## 🎯 Conclusion
+
+Logistic regression is **not outdated**—it remains highly relevant as a simple, interpretable model. While newer algorithms may outperform it, logistic regression is still an excellent **first step in classification tasks** and often provides meaningful insights into the data.
